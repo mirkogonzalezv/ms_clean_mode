@@ -11,7 +11,7 @@ export class ProductUseCaseImpl implements IProductUseCaseInterface {
     private readonly productRepository: IProductRepositoryInterface,
   ) {}
 
-  async getAllProduct(): Promise<ProductDto[]> {
+  async getAllProducts(): Promise<ProductDto[]> {
     const allProducts = await this.productRepository.getAllProducts();
     return allProducts.map((product) => ({
       productId: product.productId,

@@ -3,11 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 export const CONFIG_DATABASE = () =>
   TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'xintec',
-    password: 'Xintec2024.',
-    database: 'ecommerce_example',
+    host: process.env.HOST,
+    port: parseInt(process.env.DB_PORT),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     autoLoadEntities: true,
     synchronize: true,
     logging: true,

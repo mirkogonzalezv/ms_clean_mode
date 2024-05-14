@@ -10,8 +10,8 @@ export class ProductService implements IProductUseCaseInterface {
     private readonly productUseCase: IProductUseCaseInterface,
   ) {}
 
-  async getAllProduct(): Promise<ProductDto[]> {
-    const products = await this.productUseCase.getAllProduct();
+  async getAllProducts(): Promise<ProductDto[]> {
+    const products = await this.productUseCase.getAllProducts();
     return products.map((product) => product);
   }
   async saveProducts(product: ProductDto): Promise<void> {

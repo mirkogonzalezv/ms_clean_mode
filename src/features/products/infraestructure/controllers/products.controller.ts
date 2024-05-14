@@ -20,7 +20,7 @@ export class ProductController {
 
   @Get()
   getProducts(): Promise<ProductDto[]> {
-    return this._productService.getAllProduct();
+    return this._productService.getAllProducts();
   }
 
   @Post()

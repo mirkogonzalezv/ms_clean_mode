@@ -16,6 +16,5 @@ export class ProductRepositoryImpl implements IProductRepositoryInterface {
   }
   saveProduct(product: IProductRepositoryDto): Promise<void> {
     return this.productDataSource.saveProduct(product);
-    // await this.productDataSource.saveProduct(product);
   }
 }
