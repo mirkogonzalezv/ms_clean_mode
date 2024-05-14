@@ -1,15 +1,27 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
-export const CONFIG_DATABASE = () =>
-  TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: process.env.HOST,
-    port: parseInt(process.env.DB_PORT),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    autoLoadEntities: true,
-    synchronize: true,
-    logging: true,
-    entities: ['../src/features/**/domain/entity/*.ts'],
+export const TypeOrmConfig = (entities: [any]) => {
+  return TypeOrmModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (configService: ConfigService) => ({
+      type: 'mysql',
+      host: configService.get<string>('database.mysql.host'),
+      port: configService.get<number>('database.mysql.port'),
+      username: configService.get<string>('database.mysql.username'),
+      password: configService.get<string>('database.mysql.password'),
+      database: configService.get<string>('database.mysql.database'),
+      ssl: false,
+      entities: entities,
+      keepConnectionAlive: true,
+      synchronize: configService.get<string>('env') == 'develop' ? true : false,
+      autoLoadEntities: true,
+      logging: configService.get<string>('env') == 'develop' ? true : false,
+    }),
+    dataSourceFactory: async (options) => {
+      return new DataSource(options).initialize();
+    },
   });
+};
